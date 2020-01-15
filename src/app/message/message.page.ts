@@ -14,65 +14,69 @@ export interface Track {
 })
 export class MessagePage implements OnInit {
 
+  constructor() { }
+
   activeTrack: Track = null;
   player: Howl = null;
   isPlaying = false;
   trackID = null;
-  progress= 0;
+  progress = 0;
   @ViewChild('range', { static: false}) range: IonRange;
 
   track: Track = {
     name: 'Secret Message',
-    path: './assets/terrified.mp3'
-  };
+    // path: './assets/terrified.mp3'
+    path: './assets/macademia.mp3'
 
-  constructor() { }
+  };
+  saveSeek = null;
 
   ngOnInit() {
   }
 
-  start(){
-    if(this.player){
+  start() {
+    if (this.player) {
       this.player.stop();
     }
     this.player = new Howl({
       src: [this.track.path],
-      onplay: () =>{
+      onplay: () => {
         this.isPlaying = true;
         this.activeTrack = this.track;
         this.updateProgress();
       },
-      onend: () =>{
+      onend: () => {
 
       }
     });
     this.trackID = this.player.play();
   }
-  saveSeek = null;
-  togglePlayer(pause){
+  togglePlayer(pause) {
     this.isPlaying = !pause;
-    
-    if(pause){
+
+    if (pause) {
       this.player.pause();
-       this.saveSeek = this.player.seek(this.activeTrack);
-    }else{
+      this.saveSeek = this.player.seek(this.activeTrack);
+    } else {
       this.player.play(this.trackID);
       this.player.seek(this.saveSeek, this.trackID);
     }
   }
 
-  updateProgress(){
-    let seek = this.player.seek();
+  updateProgress() {
+    const seek = this.player.seek();
     this.progress = (seek / this.player.duration()) * 100 || 0;
     setTimeout(() => {
-      this.updateProgress(); 
+      this.updateProgress();
     }, 1000);
   }
-  seek(){
-    let newValue = +this.range.value;
-    let duration = this.player.duration;
-    this.player.seek(duration * (newValue/100));
+  seek() {
+    const newValue = +this.range.value;
+    const duration = this.player.duration;
+    this.player.seek(duration * (newValue / 100));
   }
-
-  
+  stop() {
+    this.player.stop(this.trackID);
+    this.isPlaying = false;
+  }
 }
