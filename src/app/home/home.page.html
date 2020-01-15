@@ -1,14 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
+    <ion-title class="ion-text-center">
+      Congrats Clarence!
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+    <div class="ion-padding" style="height:450px">
+      <h2>You've made it this far..</h2>
+      <h4>Go on, Choose a heart to break</h4>
+        <div class="mt-40 relative">
+          <div *ngFor="let item of items" [style]="item.position" class="absolute fitContent">
+              <img src="{{item.imgPath}}" scroll="false" class="{{item.class}}" (click)="openQuestion(item)">
+              <img src="{{item.statusImgPath}}" scroll="false" *ngIf="item.statusImgPath" class="statusCss">
+            </div>
+
+        </div>
+    </div>
+    <div class="ion-text-end m-10">
+      <span>LOVE: </span>
+      <img src="assets/heart_score.png" scroll="false" width="7%" *ngIf="loveThree">
+      <img src="assets/heart_score.png" scroll="false" width="7%" *ngIf="loveTwo">
+      <img src="assets/heart_score.png" scroll="false" width="7%" *ngIf="loveOne">
+    </div>
+    <p class="" class="ion-text-center">You have to answer 3 correct questions in order to proceed</p>
+    <ion-button color="danger" expand="full" (click)="quit()" style="vertical-align: middle">I Quit</ion-button>
 </ion-content>

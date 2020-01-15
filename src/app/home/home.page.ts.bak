@@ -1,0 +1,471 @@
+import { Component } from '@angular/core';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+  score = 0;
+  loveThree = false;
+  loveTwo = false;
+  loveOne = false;
+
+  constructor(public alertController: AlertController, public navCtrl: NavController,
+              public toastCtrl: ToastController) {
+  }
+
+
+  proceedNextRound = (async () => {
+    const alert = await this.alertController.create({
+      header: 'You are qualified to hear the secret message',
+      message: 'Note: This message will self delete within 24 hours from the first click of play button. Please wear earphones.',
+      buttons: [{
+        text: 'Yes, I am alone',
+        handler: () => {
+          this.navCtrl.navigateForward('message');
+        }
+      }],
+
+    });
+
+    await alert.present();
+  });
+
+  openQuestion = (() => {
+    const functionsArray = [
+      this.mcdoAlert,
+      this.concertAlert,
+      this.birthPlaceAlert,
+      this.firetruckAlert,
+      this.starsAlert,
+      this.superheroAlert,
+      this.movieAlert,
+      this.favoriteAlert
+    ];
+
+    functionsArray[this.getRandomIntInclusive(0, functionsArray.length - 1)]();
+  });
+
+  movieAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'First Animation movie we watch in my room?',
+      inputs: [
+        {
+          name: 'croods',
+          type: 'text',
+          placeholder: 'Answer is Two words - Sentence case'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // do something
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData.croods === 'The Croods') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  favoriteAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'My Favorite part of your body',
+      inputs: [
+        {
+          name: 'butt',
+          type: 'text',
+          placeholder: 'Answer is in English'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // something
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData.butt === 'butt') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  mcdoAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'What do I put inside Mcdonalds cheeseburger?',
+      inputs: [
+        {
+          name: 'fries',
+          type: 'text',
+          placeholder: 'Answer is Two words - Sentence case'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData.fries === 'French Fries') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  firetruckAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'What sound I\'m scared the most?',
+      inputs: [
+        {
+          name: 'firetruck',
+          type: 'text',
+          placeholder: 'Answer is one word - Sentence case'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData.firetruck === 'Firetruck') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  concertAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'Dream Concert',
+      inputs: [
+        {
+          name: 'lea',
+          type: 'radio',
+          label: 'Lea Salonga',
+          value: 'lea',
+          checked: true
+        },
+        {
+          name: 'westlife',
+          type: 'radio',
+          label: 'Westlife',
+          value: 'westlife'
+        },
+        {
+          name: 'airSupply',
+          type: 'radio',
+          label: 'Air Supply',
+          value: 'airSupply'
+        },
+        {
+          name: 'celine',
+          type: 'radio',
+          label: 'Celine Dion',
+          value: 'celine'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // something
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData === 'celine') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  starsAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'I love to stare at the..',
+      inputs: [
+        {
+          name: 'moon',
+          type: 'radio',
+          label: 'Moon',
+          value: 'moon',
+          checked: true
+        },
+        {
+          name: 'sunset',
+          type: 'radio',
+          label: 'Sunset',
+          value: 'sunset'
+        },
+        {
+          name: 'stars',
+          type: 'radio',
+          label: 'Stars',
+          value: 'stars'
+        },
+        {
+          name: 'sunrise',
+          type: 'radio',
+          label: 'Sunrise',
+          value: 'sunrise'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData === 'stars') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  birthPlaceAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'Where was I supposed to be born?',
+      inputs: [
+        {
+          name: 'australia',
+          type: 'radio',
+          label: 'Australia',
+          value: 'australia',
+          checked: true
+        },
+        {
+          name: 'us',
+          type: 'radio',
+          label: 'United States',
+          value: 'us'
+        },
+        {
+          name: 'china',
+          type: 'radio',
+          label: 'China',
+          value: 'china'
+        },
+        {
+          name: 'canada',
+          type: 'radio',
+          label: 'Canada',
+          value: 'canada'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData === 'australia') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+
+  superheroAlert = (async () => {
+    const alert = await this.alertController.create({
+      header: 'If I am a superhero, I will be..',
+      inputs: [
+        {
+          name: 'superman',
+          type: 'radio',
+          label: 'Superman',
+          value: 'superman',
+          checked: true
+        },
+        {
+          name: 'spiderman',
+          type: 'radio',
+          label: 'Spiderman',
+          value: 'spiderman'
+        },
+        {
+          name: 'batman',
+          type: 'radio',
+          label: 'Batman',
+          value: 'batman'
+        },
+        {
+          name: 'captain',
+          type: 'radio',
+          label: 'Captain America',
+          value: 'captain'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            if (alertData === 'batman') {
+              this.addScore();
+            } else {
+              this.wrongToast();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  });
+
+  async quit() {
+    const alert = await this.alertController.create({
+      header: 'Are you Sure',
+      message: 'You really wanna give up on me??',
+      buttons: [
+        {
+          text: 'Hell No!',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // something
+          }
+        }, {
+          text: 'Yes, I gave up',
+          handler: () => {
+            // TODO exit app
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async wrongToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Wrong Answer. Sad...',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async correctToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Nice! You really know me.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(random);
+    return random; // The maximum is inclusive and the minimum is inclusive
+  }
+
+
+  addScore() {
+    this.score++;
+    if (this.score === 1) {
+      this.loveOne = true;
+      this.correctToast();
+    }
+    if (this.score === 2) {
+      this.loveTwo = true;
+      this.correctToast();
+    }
+
+    if (this.score === 3) {
+      this.loveThree = true;
+      this.proceedNextRound();
+    }
+
+  }
+
+}

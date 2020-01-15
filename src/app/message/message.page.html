@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="./assets/play.png" (click)= "saveSeek ? togglePlayer(false):start()" *ngIf="!isPlaying">
+  <img src="./assets/broken.gif" (click)= "togglePlayer(true)" *ngIf="isPlaying">
+
+  <p class="ion-text-center" style="color: white;" *ngIf="!isPlaying">
+    Inside my heart you'll hear<br>what my lips are afraid to say
+  </p>
+  <p class="ion-text-center" style="color: white;" *ngIf="isPlaying">
+    You make my heart beat faster and slower
+    <br>at the same time.<br>
+    You can even make it stop breaking
+  </p>
+
+  <ion-range #range [(ngModel)] ="progress" max="100" (touchend)="seek()" (mouseup)="seek()"></ion-range>
+</ion-content>
