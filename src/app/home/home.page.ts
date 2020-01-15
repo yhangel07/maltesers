@@ -518,16 +518,7 @@ export class HomePage implements OnInit {
 
 
     ngOnInit(): void {
-        this.functionsArray = [
-            this.mcdoAlert,
-            this.concertAlert,
-            this.birthPlaceAlert,
-            this.firetruckAlert,
-            this.starsAlert,
-            this.superheroAlert,
-            this.movieAlert,
-            this.favoriteAlert
-          ];
+        this.resetGame();
     }
 
     async quit() {
@@ -633,7 +624,7 @@ export class HomePage implements OnInit {
     }
 
     resetGame() {
-        this.items.forEach((item) =>{
+        this.items.forEach((item) => {
             item.status = null;
             item.statusImgPath = null;
         });
